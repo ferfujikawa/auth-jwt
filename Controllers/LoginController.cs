@@ -1,4 +1,4 @@
-﻿using auth_jwt.Entities;
+﻿using auth_jwt.Commands;
 using auth_jwt.Repositories;
 using auth_jwt.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +13,9 @@ namespace auth_jwt.Controllers
         public IActionResult Authenticate(
             [FromServices] UserRepository userRepository,
             [FromServices] TokenService tokenService,
-            [FromBody] User model)
+            [FromBody] LoginCommand command)
         {
-            var user = userRepository.GetUser(model.Username, model.Password);
+            var user = userRepository.GetUser(command.Username, command.Password);
 
             if (user == null)
                 return NotFound(new { message = "Usuário ou senha inválidos"});
